@@ -160,10 +160,20 @@ with tab1:
         fig_hist.update_layout(showlegend=False)
         st.plotly_chart(fig_hist, width="stretch")
 
+    # Convert the filtered data to a CSV string in memory
+    csv_data = filtered_df.to_csv(index=False).encode('utf-8')
+
+    # Add the download button
+    st.download_button(
+        label="📥 Export Filtered Assay Metrics (CSV)",
+        data=csv_data,
+        file_name="C_Elegans_Filtered_Phenotypes.csv",
+        mime="text/csv"
+    )
+
     # 7. Raw Microscopic Metric Audit Registry
     st.markdown("---")
     with st.expander("📂 Computer Vision Feature Registry & Tracking Quality Log"):
-        
         num_rows = st.slider("Select number of rows to preview:", min_value=5, max_value=50, value=10)
         
         def flag_low_fidelity(row):
